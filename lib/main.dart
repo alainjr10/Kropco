@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kropco/utils/routes.dart';
 
 import 'utils/constants.dart';
 
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'KropCo',
       theme: ThemeData(
+        canvasColor: kPrimaryColor,
         colorScheme: const ColorScheme(
           primary: kPrimaryColor,
           primaryContainer: Colors.white,
@@ -37,7 +39,8 @@ class MyApp extends StatelessWidget {
         // primarySwatch: MaterialColor(primary, swatch)
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: customRoutes,
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

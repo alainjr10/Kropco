@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kropco/utils/constants.dart';
 import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/home_screen.dart';
 import 'package:kropco/views/settings_screen.dart';
@@ -43,7 +44,10 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: BottomNavigationBar(
           elevation: 15.0,
           //selectedItemColor: kPrimaryColor,
-          unselectedItemColor: Colors.black54,
+          unselectedItemColor: kPrimaryTextColor,
+          selectedItemColor: kSecondaryTextColor,
+          selectedFontSize: 12,
+          unselectedFontSize: 10,
           type: BottomNavigationBarType.fixed,
           iconSize: 28.0,
           currentIndex: _currentIndex,

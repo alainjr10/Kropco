@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StorageCenters extends StatelessWidget {
+  static const storageCentersScreenId = "/storage_centers_screen";
   const StorageCenters({Key? key}) : super(key: key);
 
   @override
