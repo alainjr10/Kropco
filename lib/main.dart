@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
           /// this on primary affects the color of the back button on the navbar
           onPrimary: kPrimaryColor,
           onSecondary: Colors.white70,
-          onSurface: Colors.white70,
+          onSurface: Colors.white,
           onBackground: Colors.white70,
           onError: Colors.red,
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
         ),
         // primarySwatch: MaterialColor(primary, swatch)
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/home_screen.dart';
@@ -49,24 +50,24 @@ class _HomeState extends State<Home> {
           selectedFontSize: 12,
           unselectedFontSize: 10,
           type: BottomNavigationBarType.fixed,
-          iconSize: 28.0,
+          iconSize: 22.0,
           currentIndex: _currentIndex,
           onTap: _updateIndex,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(FontAwesomeIcons.house),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.quiz),
-              label: "Quiz",
+              icon: Icon(FontAwesomeIcons.plantWilt),
+              label: "Diagnostics",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.download),
-              label: "Downloads",
+              icon: Icon(FontAwesomeIcons.boxArchive),
+              label: "Storage",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
+              icon: Icon(FontAwesomeIcons.gear),
               label: "Settings",
             ),
           ],
