@@ -21,7 +21,13 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(
-              Icons.notifications_outlined,
+              FontAwesomeIcons.bell,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              FontAwesomeIcons.gear,
             ),
           ),
         ],

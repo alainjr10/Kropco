@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kropco/utils/constants.dart';
+import 'package:kropco/views/dashboard_screen.dart';
 import 'package:kropco/views/disease_detection_screen.dart';
+import 'package:kropco/views/forum_screen.dart';
 import 'package:kropco/views/home_screen.dart';
 import 'package:kropco/views/settings_screen.dart';
 import 'package:kropco/views/storage_centers_screen.dart';
@@ -18,9 +20,11 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List _screens = [
     const HomeScreen(),
+    const Dashboard(),
     const DiseaseDetection(),
     const StorageCenters(),
-    const Settings(),
+    const Forum(),
+    //const Settings(),
   ];
 
   void _updateIndex(int value) {
@@ -59,6 +63,10 @@ class _HomeState extends State<Home> {
               label: "Home",
             ),
             BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.grip),
+              label: "Dashboard",
+            ),
+            BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.plantWilt),
               label: "Diagnostics",
             ),
@@ -67,8 +75,8 @@ class _HomeState extends State<Home> {
               label: "Storage",
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.gear),
-              label: "Settings",
+              icon: Icon(FontAwesomeIcons.peopleGroup),
+              label: "Forum",
             ),
           ],
         ),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "935705435829",
+    "project_id": "kropco-bc094",
+    "storage_bucket": "kropco-bc094.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935705435829:android:72317ae8a63b438d7fe8fc",
+        "android_client_info": {
+          "package_name": "com.example.kropco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935705435829-tjq1vufgdg55ip128q2cl7fdjprjnm74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuzmEWUped6GR-loUAvbisGyrSSxW037k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935705435829-tjq1vufgdg55ip128q2cl7fdjprjnm74.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
