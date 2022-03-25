@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kropco/utils/constants.dart';
+import 'package:location/location.dart';
 
 class StorageCenters extends StatefulWidget {
   static const storageCentersScreenId = "/storage_centers_screen";
@@ -13,12 +14,30 @@ class StorageCenters extends StatefulWidget {
 class _StorageCentersState extends State<StorageCenters> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  final LatLng _center = const LatLng(25.521563, 22.677433);
   MapType _mapType = MapType.normal;
+  final Location _location = Location();
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _location.getLocation().then((value) {
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+            target: LatLng(value.latitude!, value.longitude!), zoom: 15),
+      ));
+    });
   }
+
+  // void _onMapCreated(GoogleMapController controller) {
+
+  //   _location.onLocationChanged.listen((l) {
+  //     mapController.animateCamera(
+  //       CameraUpdate.newCameraPosition(
+  //         CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 11),
+  //       ),
+  //     );
+  //   });
+  // }
 
   void _toggleMapType() {
     if (_mapType == MapType.normal) {
@@ -36,7 +55,7 @@ class _StorageCentersState extends State<StorageCenters> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Google maps"),
+        title: const Text("Storage Centers"),
         backgroundColor: kPrimaryColor,
         centerTitle: true,
       ),
