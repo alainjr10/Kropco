@@ -52,6 +52,11 @@ android {
         versionName flutterVersionName
     }
 
+     aaptOptions {
+        noCompress 'tflite'
+       // noCompress 'lite'
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -68,5 +73,11 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
     implementation 'com.google.firebase:firebase-analytics'
+     // ...
+  // Use this dependency to bundle the pipeline with your app
+  implementation 'com.google.mlkit:image-labeling-custom:17.0.1'
+  // Or use the dynamically downloaded pipeline in Google Play Services
+  // implementation 'com.google.android.gms:play-services-mlkit-image-labeling-custom:16.0.0-beta3'
+  implementation 'com.google.mlkit:linkfirebase:17.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

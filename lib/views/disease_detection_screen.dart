@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:kropco/widgets/custom_appBar.dart';
 import 'package:kropco/widgets/diagnostics_screen_btns.dart';
+import 'package:tflite/tflite.dart';
 
 class DiseaseDetection extends StatefulWidget {
   static const diseaseDetectionScreenId = "/disease_detection";
@@ -27,11 +28,18 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
       if (pickedFile != null) {
         pickedImage = File(pickedFile.path);
         debugPrint('Image Picked from gallery');
-        //classifyImage(pickedImage!);
+        classifyImage(pickedImage!).then((value) {
+          setState(() {
+            debugPrint('Image Classified with value ${value.toString()}');
+            //output = value;
+          });
+        });
       } else {
         debugPrint('no image');
       }
     });
+
+    // classifyImage(pickedImage!);
   }
 
   Future captureImage() async {
@@ -41,12 +49,57 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
       if (pickedFile != null) {
         pickedImage = File(pickedFile.path);
         debugPrint('Image Picked from camera');
-        //classifyImage(pickedImage!);
+        classifyImage(pickedImage!);
         return;
       } else {
         debugPrint('no image');
       }
     });
+  }
+
+  Future loadModel() async {
+    await Tflite.loadModel(
+        model: 'assets/models/model_unquant.tflite',
+        labels: 'assets/models/labels.txt');
+  }
+
+  Future classifyImage(File image) async {
+    await loadModel();
+    var output = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 2,
+      threshold: 0.5,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+    setState(() {
+      this.output = output;
+      index = 0;
+      debugPrint('output is $output');
+    });
+    return output;
+  }
+
+  // var _output;
+  // classifyImage(File image) async {
+  //   var output = await Tflite.runModelOnImage(path: image.path);
+  //   setState(() {
+  //     _output = output;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    loadModel().then((value) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Tflite.close();
   }
 
   @override
@@ -74,12 +127,19 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                       )
                     : Image.file(
                         pickedImage!,
-                        fit: BoxFit.fill, 
+                        fit: BoxFit.fill,
                       ),
               ),
               const SizedBox(
                 height: 10.0,
-              ), 
+              ),
+
+              output != null
+                  ? Text(
+                      "${output[0]['label']}",
+                      style: kH1TextSyle,
+                    )
+                  : Container(),
 
               /// capture image from camera btn
               DiagnosticsScreenMainBtn(
