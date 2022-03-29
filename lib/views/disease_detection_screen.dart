@@ -3,10 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kropco/models/disease_model.dart';
 import 'package:kropco/utils/constants.dart';
+import 'package:kropco/views/suggestions_screen.dart';
 import 'package:kropco/widgets/custom_appBar.dart';
 import 'package:kropco/widgets/diagnostics_screen_btns.dart';
+import 'package:provider/provider.dart';
 import 'package:tflite/tflite.dart';
+
+import '../services/classify_image.dart';
+import '../services/disease_provider.dart';
 
 class DiseaseDetection extends StatefulWidget {
   static const diseaseDetectionScreenId = "/disease_detection";
@@ -18,67 +24,67 @@ class DiseaseDetection extends StatefulWidget {
 
 class _DiseaseDetectionState extends State<DiseaseDetection> {
   File? pickedImage;
-  var output;
-  var index;
+  // var output;
+  // var index;
 
-  Future pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        pickedImage = File(pickedFile.path);
-        debugPrint('Image Picked from gallery');
-        classifyImage(pickedImage!).then((value) {
-          setState(() {
-            debugPrint('Image Classified with value ${value.toString()}');
-            //output = value;
-          });
-        });
-      } else {
-        debugPrint('no image');
-      }
-    });
+  // Future pickImage() async {
+  //   final pickedFile =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       pickedImage = File(pickedFile.path);
+  //       debugPrint('Image Picked from gallery');
+  //       classifyImage(pickedImage!).then((value) {
+  //         setState(() {
+  //           debugPrint('Image Classified with value ${value.toString()}');
+  //           //output = value;
+  //         });
+  //       });
+  //     } else {
+  //       debugPrint('no image');
+  //     }
+  //   });
 
-    // classifyImage(pickedImage!);
-  }
+  //   // classifyImage(pickedImage!);
+  // }
 
-  Future captureImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        pickedImage = File(pickedFile.path);
-        debugPrint('Image Picked from camera');
-        classifyImage(pickedImage!);
-        return;
-      } else {
-        debugPrint('no image');
-      }
-    });
-  }
+  // Future captureImage() async {
+  //   final pickedFile =
+  //       await ImagePicker().pickImage(source: ImageSource.camera);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       pickedImage = File(pickedFile.path);
+  //       debugPrint('Image Picked from camera');
+  //       classifyImage(pickedImage!);
+  //       return;
+  //     } else {
+  //       debugPrint('no image');
+  //     }
+  //   });
+  // }
 
-  Future loadModel() async {
-    await Tflite.loadModel(
-        model: 'assets/models/model_unquant.tflite',
-        labels: 'assets/models/labels.txt');
-  }
+  // Future loadModel() async {
+  //   await Tflite.loadModel(
+  //       model: 'assets/models/model_unquant.tflite',
+  //       labels: 'assets/models/labels.txt');
+  // }
 
-  Future classifyImage(File image) async {
-    await loadModel();
-    var output = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 2,
-      threshold: 0.5,
-      imageMean: 127.5,
-      imageStd: 127.5,
-    );
-    setState(() {
-      this.output = output;
-      index = 0;
-      debugPrint('output is $output');
-    });
-    return output;
-  }
+  // Future classifyImage(File image) async {
+  //   await loadModel();
+  //   var output = await Tflite.runModelOnImage(
+  //     path: image.path,
+  //     numResults: 2,
+  //     threshold: 0.5,
+  //     imageMean: 127.5,
+  //     imageStd: 127.5,
+  //   );
+  //   setState(() {
+  //     this.output = output;
+  //     index = 0;
+  //     debugPrint('output is $output');
+  //   });
+  //   return output;
+  // }
 
   // var _output;
   // classifyImage(File image) async {
@@ -88,13 +94,13 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   //   });
   // }
 
-  @override
-  void initState() {
-    super.initState();
-    loadModel().then((value) {
-      setState(() {});
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // loadModel().then((value) {
+  //   //   setState(() {});
+  //   // });
+  // }
 
   @override
   void dispose() {
@@ -104,7 +110,13 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
 
   @override
   Widget build(BuildContext context) {
+    // Get disease from provider
+    final _diseaseService = Provider.of<DiseaseService>(context);
+    final Classifier classifier = Classifier();
+    late Disease _disease;
+
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: const CustomAppBar(appBarTitle: "Diagnostics"),
       body: Center(
@@ -134,22 +146,53 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                 height: 10.0,
               ),
 
-              output != null
-                  ? Text(
-                      "${output[0]['label']}",
-                      style: kH1TextSyle,
+              /// If we have a suggestion in memory, display the previous suggestion button, so the user can see their most recent diagnosis
+              _diseaseService.diseaseStatus == true
+                  ? ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, Suggestions.suggestionsScreenId);
+                      },
+                      child: const Text("Previous suggestion"),
+                      style: ElevatedButton.styleFrom(
+                          primary: kSecondaryColor,
+                          onPrimary: kPrimaryTextColor,
+                          textStyle: kH2TextSyle,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          fixedSize: Size(size.width, 60),
+                          minimumSize: Size(size.width, 70)),
                     )
-                  : Container(),
+                  : const SizedBox(),
 
-              /// capture image from camera btn
+              const SizedBox(
+                height: 20.0,
+              ),
+
               DiagnosticsScreenMainBtn(
                 size: size,
                 btnCaption: "Take Photo",
                 btnIcon: Icons.camera_alt_outlined,
-                onPressed: () {
-                  setState(() {
-                    captureImage();
+                onPressed: () async {
+                  late double _confidence;
+                  await classifier
+                      .getDisease(imageSource: ImageSource.camera)
+                      .then((value) {
+                    _disease = Disease(
+                        name: value![0]["label"],
+                        imagePath: classifier.imageFile.path);
+                    _confidence = value[0]["confidence"];
                   });
+
+                  //check confidence
+                  if (_confidence > 0.8) {
+                    _diseaseService.setDiseaseValue(_disease);
+                    Navigator.restorablePushNamed(
+                        context, Suggestions.suggestionsScreenId);
+                  } else {
+                    debugPrint("Not a disease");
+                  }
                 },
               ),
               const SizedBox(
@@ -161,10 +204,26 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                 size: size,
                 btnCaption: "From Gallery",
                 btnIcon: Icons.browse_gallery_outlined,
-                onPressed: () {
-                  setState(() {
-                    pickImage();
+                onPressed: () async {
+                  late double _confidence;
+                  await classifier
+                      .getDisease(imageSource: ImageSource.gallery)
+                      .then((value) {
+                    debugPrint("Starting diagnosis");
+                    _disease = Disease(
+                        name: value![0]["label"],
+                        imagePath: classifier.imageFile.path);
+                    _confidence = value[0]["confidence"];
                   });
+
+                  //check confidence
+                  if (_confidence > 0.8) {
+                    _diseaseService.setDiseaseValue(_disease);
+                    Navigator.restorablePushNamed(
+                        context, Suggestions.suggestionsScreenId);
+                  } else {
+                    debugPrint("Not a disease");
+                  }
                 },
               ),
             ],

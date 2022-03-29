@@ -6,6 +6,7 @@ import 'package:kropco/views/home_screen.dart';
 import 'package:kropco/views/homepage.dart';
 import 'package:kropco/views/settings_screen.dart';
 import 'package:kropco/views/storage_centers_screen.dart';
+import 'package:kropco/views/suggestions_screen.dart';
 
 var customRoutes = <String, WidgetBuilder>{
   '/': (context) => const Home(),
@@ -16,4 +17,5 @@ var customRoutes = <String, WidgetBuilder>{
   Settings.settingsScreenId: (context) => const Settings(),
   Dashboard.dashboardScreenId: (context) => const Dashboard(),
   Forum.forumScreenId: (context) => const Forum(),
+  Suggestions.suggestionsScreenId: (context) => const Suggestions(),
 };

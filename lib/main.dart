@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kropco/services/disease_provider.dart';
 import 'package:kropco/utils/routes.dart';
+import 'package:provider/provider.dart';
 
 import 'utils/constants.dart';
 
@@ -16,34 +18,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'KropCo',
-      theme: ThemeData(
-        canvasColor: kPrimaryColor,
-        colorScheme: const ColorScheme(
-          primary: kPrimaryColor,
-          primaryContainer: Colors.white,
-          secondaryContainer: Colors.white70,
-          // primaryVariant: Colors.white,
-          secondary: Colors.white70,
-          // secondaryVariant: Colors.white70,
-          surface: Colors.white70,
-          background: Colors.white,
-          error: Colors.red,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DiseaseService()),
+      ],
+      child: MaterialApp(
+        title: 'KropCo',
+        theme: ThemeData(
+          canvasColor: kPrimaryColor,
+          colorScheme: const ColorScheme(
+            primary: kPrimaryColor,
+            primaryContainer: Colors.white,
+            secondaryContainer: Colors.white70,
+            // primaryVariant: Colors.white,
+            secondary: Colors.white70,
+            // secondaryVariant: Colors.white70,
+            surface: Colors.white70,
+            background: Colors.white,
+            error: Colors.red,
 
-          /// this on primary affects the color of the back button on the navbar
-          onPrimary: kPrimaryColor,
-          onSecondary: Colors.white70,
-          onSurface: Colors.white,
-          onBackground: Colors.white70,
-          onError: Colors.red,
-          brightness: Brightness.dark,
+            /// this on primary affects the color of the back button on the navbar
+            onPrimary: kPrimaryColor,
+            onSecondary: Colors.white70,
+            onSurface: Colors.white,
+            onBackground: Colors.white70,
+            onError: Colors.red,
+            brightness: Brightness.dark,
+          ),
+          // primarySwatch: MaterialColor(primary, swatch)
         ),
-        // primarySwatch: MaterialColor(primary, swatch)
+        debugShowCheckedModeBanner: false,
+        routes: customRoutes,
+        //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      debugShowCheckedModeBanner: false,
-      routes: customRoutes,
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
