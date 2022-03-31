@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:location/location.dart';
 
+import '../components/storage_centers/storage_center_locations.dart';
+
 class StorageCenters extends StatefulWidget {
   static const storageCentersScreenId = "/storage_centers_screen";
   const StorageCenters({Key? key}) : super(key: key);
@@ -21,23 +23,13 @@ class _StorageCentersState extends State<StorageCenters> {
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
     _location.getLocation().then((value) {
+      debugPrint("Latitude: ${value.latitude}, longitude: ${value.longitude}");
       mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
             target: LatLng(value.latitude!, value.longitude!), zoom: 15),
       ));
     });
   }
-
-  // void _onMapCreated(GoogleMapController controller) {
-
-  //   _location.onLocationChanged.listen((l) {
-  //     mapController.animateCamera(
-  //       CameraUpdate.newCameraPosition(
-  //         CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 11),
-  //       ),
-  //     );
-  //   });
-  // }
 
   void _toggleMapType() {
     if (_mapType == MapType.normal) {
@@ -66,9 +58,10 @@ class _StorageCentersState extends State<StorageCenters> {
             myLocationButtonEnabled: true,
             mapType: _mapType,
             onMapCreated: _onMapCreated,
+            markers: StorageCentersMarkerLocations().getmarkers(context),
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 11.0,
+              zoom: 9.0,
             ),
           ),
           Positioned(

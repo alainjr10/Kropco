@@ -17,8 +17,8 @@ class Classifier {
     return result;
   }
 
- Future loadModel() async {
-   /// Load the Tensorflow Lite model.
+  Future loadModel() async {
+    /// Load the Tensorflow Lite model.
     await Tflite.loadModel(
         model: 'assets/models/model_unquant.tflite',
         labels: 'assets/models/labels.txt');
