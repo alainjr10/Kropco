@@ -77,7 +77,7 @@ class StorageCentersMarkerLocations {
     // ),
   };
 
-  Set<Marker> getmarkers(BuildContext context) {
+  Set<Marker> getmarkers(BuildContext context, Size size) {
     //markers to place on map
 
     markers.add(
@@ -86,7 +86,7 @@ class StorageCentersMarkerLocations {
         title: "Mushong Center",
         onTap: () {
           debugPrint("Mushong Center");
-          storageCenterModal(context);
+          storageCenterModal(context, "Mushong Center", size);
         },
       ),
     );

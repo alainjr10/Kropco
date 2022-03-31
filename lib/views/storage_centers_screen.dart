@@ -45,6 +45,7 @@ class _StorageCentersState extends State<StorageCenters> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Storage Centers"),
@@ -58,7 +59,7 @@ class _StorageCentersState extends State<StorageCenters> {
             myLocationButtonEnabled: true,
             mapType: _mapType,
             onMapCreated: _onMapCreated,
-            markers: StorageCentersMarkerLocations().getmarkers(context),
+            markers: StorageCentersMarkerLocations().getmarkers(context, size),
             initialCameraPosition: CameraPosition(
               target: _center,
               zoom: 9.0,
