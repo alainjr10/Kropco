@@ -42,6 +42,8 @@ dependencies:
   flutter_svg: ^1.0.3
   tflite: ^1.1.2
   provider: ^6.0.2
+  image: ^3.1.1
+  progress_dialog_null_safe: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -70,9 +72,12 @@ flutter:
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.
     - assets/
-    - assets/images/
+    # - assets/images/
     - assets/svg/
     - assets/models/
+    - assets/alt/
+    - assets/alt/testfolder/
+    - assets/kak/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
