@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:kropco/view_models/weather_model.dart';
 import 'package:kropco/views/disease_analysis_screen.dart';
+import 'package:kropco/views/notifications_screen.dart';
+import 'package:kropco/views/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const homeScreenId = "/home_screen";
@@ -45,13 +47,18 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                  context, NotificationsScreen.notificationsScreenId);
+            },
             icon: const Icon(
               FontAwesomeIcons.bell,
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Settings.settingsScreenId);
+            },
             icon: const Icon(
               FontAwesomeIcons.gear,
             ),
@@ -89,7 +96,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, Settings.settingsScreenId);
+                    },
                     icon: const Icon(
                       FontAwesomeIcons.circleUser,
                       size: 32,
