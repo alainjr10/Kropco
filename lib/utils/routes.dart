@@ -4,6 +4,7 @@ import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/forum_screen.dart';
 import 'package:kropco/views/home_screen.dart';
 import 'package:kropco/views/homepage.dart';
+import 'package:kropco/views/recently_viewed_screen.dart';
 import 'package:kropco/views/settings_screen.dart';
 import 'package:kropco/views/storage_centers_screen.dart';
 import 'package:kropco/views/suggestions_screen.dart';
@@ -18,4 +19,5 @@ var customRoutes = <String, WidgetBuilder>{
   Dashboard.dashboardScreenId: (context) => const Dashboard(),
   Forum.forumScreenId: (context) => const Forum(),
   Suggestions.suggestionsScreenId: (context) => const Suggestions(),
+  RecentlyViewed.recentlyViewedScreenId: (context) => const RecentlyViewed(),
 };

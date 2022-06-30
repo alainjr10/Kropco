@@ -5,6 +5,7 @@ import 'package:kropco/views/dashboard_screen.dart';
 import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/forum_screen.dart';
 import 'package:kropco/views/home_screen.dart';
+import 'package:kropco/views/recently_viewed_screen.dart';
 import 'package:kropco/views/settings_screen.dart';
 import 'package:kropco/views/storage_centers_screen.dart';
 
@@ -22,7 +23,8 @@ class _HomeState extends State<Home> {
     const HomeScreen(),
     const Dashboard(),
     const DiseaseDetection(),
-    const StorageCenters(),
+    // const StorageCenters(),
+    const RecentlyViewed(),
     const Forum(),
     //const Settings(),
   ];
@@ -70,9 +72,13 @@ class _HomeState extends State<Home> {
               icon: Icon(FontAwesomeIcons.plantWilt),
               label: "Diagnostics",
             ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(FontAwesomeIcons.boxArchive),
+            //   label: "Storage",
+            // ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.boxArchive),
-              label: "Storage",
+              icon: Icon(FontAwesomeIcons.bookmark),
+              label: "Recent",
             ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.peopleGroup),
