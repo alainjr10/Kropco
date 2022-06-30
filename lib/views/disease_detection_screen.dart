@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kropco/models/disease_model.dart';
 import 'package:kropco/utils/constants.dart';
+import 'package:kropco/views/disease_analysis_screen.dart';
 import 'package:kropco/views/suggestions_screen.dart';
 import 'package:kropco/widgets/custom_appBar.dart';
 import 'package:kropco/widgets/diagnostics_screen_btns.dart';
@@ -55,12 +56,6 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
         debugPrint(
             "the path of the image from image picker is: ${pickedImage!}");
         predictImage(pickedImage!);
-        // classifyImage(pickedImage!).then((value) {
-        //   setState(() {
-        //     debugPrint('Image Classified with value ${value.toString()}');
-        //     //output = value;
-        //   });
-        // });
       } else {
         debugPrint('no image');
       }
@@ -69,20 +64,21 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
     // classifyImage(pickedImage!);
   }
 
-  // Future captureImage() async {
-  //   final pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.camera);
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       pickedImage = File(pickedFile.path);
-  //       debugPrint('Image Picked from camera');
-  //       classifyImage(pickedImage!);
-  //       return;
-  //     } else {
-  //       debugPrint('no image');
-  //     }
-  //   });
-  // }
+  Future captureImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        pickedFilePath = pickedFile.path;
+        pickedImage = File(pickedFile.path);
+        debugPrint('Image Picked from camera');
+        predictImage(pickedImage!);
+        return;
+      } else {
+        debugPrint('no image');
+      }
+    });
+  }
 
   // Future loadModel() async {
   //   await Tflite.loadModel(
@@ -220,9 +216,15 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
           if (confidence.abs() > 0.80) {
             debugPrint(
                 "Confidence is high enough: ${confidence.abs()} now navigate to the results screen");
+            Navigator.pushNamed(
+                context, DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+                arguments: labelForHighest);
             // resultPage(context, labelForHighest);
           } else {
             debugPrint("Confidence is too low, we don't know this disease");
+            Navigator.pushNamed(
+                context, DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+                arguments: labelForHighest);
             // showCustomDialogWithImage(context, labelForHighest);
           }
         } else {
@@ -350,15 +352,16 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                 btnCaption: "Take Photo",
                 btnIcon: Icons.camera_alt_outlined,
                 onPressed: () async {
-                  late double _confidence;
-                  await classifier
-                      .getDisease(imageSource: ImageSource.camera)
-                      .then((value) {
-                    // _disease = Disease(
-                    //     name: value![0]["label"] ?? "",
-                    //     imagePath: classifier.imageFile.path);
-                    // _confidence = value[0]["confidence"];
-                  });
+                  captureImage();
+                  // late double _confidence;
+                  // await classifier
+                  //     .getDisease(imageSource: ImageSource.camera)
+                  //     .then((value) {
+                  //   // _disease = Disease(
+                  //   //     name: value![0]["label"] ?? "",
+                  //   //     imagePath: classifier.imageFile.path);
+                  //   // _confidence = value[0]["confidence"];
+                  // });
 
                   //check confidence
                   // if (_confidence > 0.8) {

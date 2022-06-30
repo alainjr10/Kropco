@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kropco/services/disease_provider.dart';
 import 'package:kropco/utils/routes.dart';
+import 'package:kropco/views/disease_analysis_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'utils/constants.dart';
@@ -47,6 +48,16 @@ class MyApp extends StatelessWidget {
           ),
           // primarySwatch: MaterialColor(primary, swatch)
         ),
+        onGenerateRoute: (settings) {
+          if (settings.name == DiseaseAnalysisScreen.diseaseAnalysisScreenId) {
+            final String diseaseName = settings.arguments as String;
+            return MaterialPageRoute(builder: (context) {
+              return DiseaseAnalysisScreen(diseaseName: diseaseName);
+            });
+          }
+          assert(false, 'Implementation ${settings.name}');
+          return null;
+        },
         debugShowCheckedModeBanner: false,
         routes: customRoutes,
         //home: const MyHomePage(title: 'Flutter Demo Home Page'),
