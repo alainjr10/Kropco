@@ -42,6 +42,11 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   double? _imageWidth;
   bool dialVisible = true;
   String? pickedFilePath;
+  var rec1;
+  var rec2;
+  var rec3;
+  var rec4;
+  var rec5;
   // var output;
   // var index;
 
@@ -151,11 +156,19 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
           img.copyResize(oriImage!, width: 299, height: 299);
       var recognitions = await Tflite.runModelOnBinary(
         binary: classifier.imageToByteListFloat32(resizedImage, 299, 0, 255.0),
-        numResults: 3,
-        threshold: 0.4,
+        // numResults: 3,
+        // threshold: 0.4,
+        numResults: 5,
+        threshold: 0.1,
       );
       setState(() {
         _recognitions = recognitions;
+        debugPrint("Length of recognitions: ${recognitions?.length}");
+        // rec1 = recognitions![0];
+        // rec2 = recognitions[1];
+        // rec3 = recognitions[2];
+        // rec4 = recognitions[1];
+        // rec5 = recognitions[2];
       });
 
       pr!.show();
@@ -203,15 +216,18 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
 
         if (_recognitions!.isEmpty == false) {
           for (int i = 0; i < _recognitions!.length; i++) {
-            print(_recognitions![i]);
+            debugPrint("Rcognitions: ${_recognitions![i]}");
             if (_recognitions![i]['confidence'] > confidence) {
               labelForHighest = _recognitions![i]['label'];
               confidence = _recognitions![i]['confidence'];
             }
           }
 
+          // debugPrint("recognitions: $rec1,\n $rec2 \n $rec3 \n $rec4");
+
           debugPrint(
               "The leaf label with the highest accuracy is: $labelForHighest");
+
           debugPrint("and it has a confidence of: ${confidence.toString()}");
           if (confidence.abs() > 0.80) {
             debugPrint(

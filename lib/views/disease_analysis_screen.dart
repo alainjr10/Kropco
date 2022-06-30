@@ -19,7 +19,7 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
     super.initState();
     dModel.setVariables(widget.diseaseName);
     debugPrint(
-        "dusease name ${widget.diseaseName}, scientific name ${dModel.scientificName}");
+        "disease name ${widget.diseaseName}, scientific name ${dModel.scientificName}");
   }
 
   @override

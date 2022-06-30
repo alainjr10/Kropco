@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:kropco/view_models/weather_model.dart';
+import 'package:kropco/views/disease_analysis_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const homeScreenId = "/home_screen";
@@ -9,7 +10,32 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     WeatherModel _weatherModel = WeatherModel();
+
+    List<Trending> trendingDiseases = [
+      Trending(
+        diseaseName: "Corn Common Rust",
+        diseaseImageUrl: "10.jpg",
+      ),
+      Trending(
+        diseaseName: "Tomato Late Blight",
+        diseaseImageUrl: "34.jpg",
+      ),
+      Trending(
+        diseaseName: "Potato Late Blight",
+        diseaseImageUrl: "20.jpg",
+      ),
+      Trending(
+        diseaseName: "Corn Northern Leaf Blight",
+        diseaseImageUrl: "14.jpg",
+      ),
+      Trending(
+        diseaseName: "Tomato Early Blight",
+        diseaseImageUrl: "31.jpg",
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -254,10 +280,78 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 30.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Trending Diseases Around You",
+                    style: kH3TextSyle,
+                  ),
+                  Text(
+                    "These are some of the most common diseases users around you have recently reported",
+                    style: kSubTextTextStyle.copyWith(fontSize: 14.0),
+                  ),
+                  const SizedBox(height: 12.0),
+                  SizedBox(
+                    height: 400.0,
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: trendingDiseases.length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 20.0);
+                      },
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+                              arguments: trendingDiseases[index].diseaseName,
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 350.0,
+                                width: size.width * 0.75,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/alt/${trendingDiseases[index].diseaseImageUrl}"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              Text(
+                                trendingDiseases[index].diseaseName,
+                                style: kH3TextSyle,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class Trending {
+  final String diseaseName;
+  final String diseaseImageUrl;
+
+  Trending({required this.diseaseName, required this.diseaseImageUrl});
 }
