@@ -17,23 +17,23 @@ class HomeScreen extends StatelessWidget {
 
     List<Trending> trendingDiseases = [
       Trending(
-        diseaseName: "Corn Common Rust",
+        diseaseName: "corn maize common rust",
         diseaseImageUrl: "10.jpg",
       ),
       Trending(
-        diseaseName: "Tomato Late Blight",
+        diseaseName: "tomato late blight",
         diseaseImageUrl: "34.jpg",
       ),
       Trending(
-        diseaseName: "Potato Late Blight",
+        diseaseName: "potato late blight",
         diseaseImageUrl: "20.jpg",
       ),
       Trending(
-        diseaseName: "Corn Northern Leaf Blight",
+        diseaseName: "corn maize northern leaf blight",
         diseaseImageUrl: "14.jpg",
       ),
       Trending(
-        diseaseName: "Tomato Early Blight",
+        diseaseName: "tomato early blight",
         diseaseImageUrl: "31.jpg",
       ),
     ];

@@ -15,27 +15,27 @@ class RecentlyViewed extends StatefulWidget {
 class _RecentlyViewedState extends State<RecentlyViewed> {
   List<Recent> recentlyViewedLeaves = [
     Recent(
-      diseaseName: "Corn Common Rust",
+      diseaseName: "corn maize common rust",
       diseaseImageUrl: "10.jpg",
       viewFrequency: "14",
     ),
     Recent(
-      diseaseName: "Tomato Late Blight",
+      diseaseName: "tomato late blight",
       diseaseImageUrl: "34.jpg",
       viewFrequency: "15",
     ),
     Recent(
-      diseaseName: "Potato Late Blight",
+      diseaseName: "potato late blight",
       diseaseImageUrl: "20.jpg",
       viewFrequency: "12",
     ),
     Recent(
-      diseaseName: "Corn Northern Leaf Blight",
+      diseaseName: "corn maize northern leaf blight",
       diseaseImageUrl: "14.jpg",
       viewFrequency: "19",
     ),
     Recent(
-        diseaseName: "Tomato Early Blight",
+        diseaseName: "tomato early blight",
         diseaseImageUrl: "31.jpg",
         viewFrequency: "17"),
   ];

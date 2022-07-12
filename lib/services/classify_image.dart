@@ -66,8 +66,10 @@ class Classifier {
     try {
       String? res;
       res = await Tflite.loadModel(
-        model: "assets/alt/model.tflite",
-        labels: "assets/alt/labels.txt",
+        // model: "assets/alt/model.tflite",
+        // labels: "assets/alt/labels.txt",
+        model: "assets/models/plant_disease_model.tflite",
+        labels: "assets/models/plant_labels.txt",
       );
       debugPrint(res);
     }

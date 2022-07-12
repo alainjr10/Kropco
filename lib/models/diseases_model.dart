@@ -20,7 +20,7 @@ class DiseasesModel {
 
   void setVariables(String diseaseName) {
     switch (diseaseName) {
-      case "Apple Cedar Rust":
+      case "apple Cedar Rust":
         {
           scientificName = "Gymnosporangium juniperi-virginianae";
           images = ["4.jpg", "5.jpg", "6.jpg"];
@@ -53,7 +53,7 @@ class DiseasesModel {
               "strain of bacteria that is effective at treating cedar apple rust on apple trees. It is a special strain of Bacillus subtilis ";
         }
         break;
-      case "Corn Common Rust":
+      case "corn maize common rust":
         {
           scientificName = "Puccinia sorghi Schwein";
           images = ["10.jpg", "11.jpg", "12.jpg"];
@@ -87,7 +87,7 @@ class DiseasesModel {
               "strain of bacteria that is effective at treating cedar apple rust on apple trees. It is a special strain of Bacillus subtilis ";
         }
         break;
-      case "Corn Northern Leaf Blight":
+      case "corn maize northern leaf blight":
         {
           scientificName = "Exserohilumturcicun";
           images = ["13.jpg", "14.jpg", "15.jpg"];
@@ -102,7 +102,7 @@ class DiseasesModel {
               ' If disease levels were high the previous season, liquid copper fungicides can be sprayed to impede the fungal growth on the tree during the winter season. Sulfur sprays are only partially effective Maize. However, solutions containing sulfur and pyrethrins are available for organic control of the disease during the growing season. Always consider an integrated approach with preventive measures together with biological treatments if available. Protectant fungicides such as dodine, captan or dinathion can be sprayed around bud break to avoid the disease. Once it has been detected, fungicides based on difenoconazole, myclobutanil or sulphur can be used to control the development of the fungus. Ensure fungicides from different chemical groups are used to avoid the development of resistance.';
         }
         break;
-      case "Corn Gray Leaf Spot":
+      case "corn maize cercospora leaf spot gray leaf spot":
         {
           scientificName = "Cercospora zea-maydis";
           images = ["7.jpg", "8.jpg", "9.jpg"];
@@ -118,7 +118,7 @@ class DiseasesModel {
               ' 1. Under high disease pressure, timely fungicide applications can greatly minimize impact on yield. These applications are costly and usually only practical when disease pressure is high.\n\n2.Proline 480 SC: Proline 480 SC is to be applied at 420 mL per/ha. This fungicide can only be applied a maximum 1 time/year. It should be note that only ground application is acceptable.\n\n3. Tilt 250 and Bumper 418 EC: Tilt 250 is to be applied at 500 mL/ha. Bumper 418 EC is to be applied at 300 mL/ha. Both fungicides are to be applied when rust pustules first appear. If disease is prevalent after primary application, a second application 14 days later may be necessary.';
         }
         break;
-      case "Tomato Early Blight":
+      case "tomato early blight":
         {
           scientificName = "Alternaria Solani";
           images = ["30.jpg", "31.jpg", "32.jpg"];
@@ -132,7 +132,7 @@ class DiseasesModel {
               '1. Application of products based on Bacillus subtilis or copper-based fungicides registered as organic can treat this disease.  \n\n2. Always consider an integrated approach with preventive measures and biological treatments if available. There are numerous fungicides on the market for controlling early blight. Fungicides based on or combinations of azoxystrobin, pyraclostrobin, difenoconazole, boscalid, chlorothalonil, fenamidone, maneb, mancozeb, trifloxystrobin, and ziram can be used. Rotation of different chemical compounds is recommended. Apply treatments in a timely manner, taking into account weather conditions. Check carefully the preharvest interval at which you can harvest safely after the application of these products.\n\n3. Biofungicides: There is a strain of bacteria that is effective at treating cedar apple rust on apple trees. It is a special strain of Bacillus subtilis';
         }
         break;
-      case "Tomato Late Blight":
+      case "tomato late blight":
         {
           scientificName = "Phytophthora infestans";
           images = ["33.jpg", "34.jpg", "35.jpg"];
@@ -147,7 +147,7 @@ class DiseasesModel {
               '1. At this point, there is no biological control of known efficacy against late blight. To avoid spreading, remove and destroy plants around the infected spot immediately and do not compost infected plant material.  \n\n2. Always consider an integrated approach with preventive measures together with biological treatments if available. Use fungicide sprays based on mandipropamid, chlorothalonil, fluazinam, mancozeb to combat late blight. Fungicides are generally needed only if the disease appears during a time of year when rain is likely or overhead irrigation is practiced. .\n\n3. Biofungicides: There is a strain of bacteria that is effective at treating cedar apple rust on apple trees. It is a special strain of Bacillus subtilis';
         }
         break;
-      case "Potato Early Blight":
+      case "potato early blight":
         {
           scientificName = "Alternaria solani";
           images = ["16.jpg", "17.jpg", "18.jpg"];
@@ -162,7 +162,7 @@ class DiseasesModel {
               '     Application of products based on Bacillus subtilis or copper-based fungicides registered as organic can treat this disease. Always consider an integrated approach with preventive measures and biological treatments if available. There are numerous fungicides on the market for controlling early blight. Fungicides based on or combinations of azoxystrobin, pyraclostrobin, difenoconazole, boscalid, chlorothalonil, fenamidone, maneb, mancozeb, trifloxystrobin, and ziram can be used. Rotation of different chemical compounds is recommended. Apply treatments in a timely manner, taking into account weather conditions. Check carefully the preharvest interval at which you can harvest safely after the application of these products. ';
         }
         break;
-      case "Potato Late Blight":
+      case "potato late blight":
         {
           scientificName = "Alternaria solani";
           images = ["19.jpg", "20.jpg", "21.jpg"];
@@ -178,6 +178,16 @@ class DiseasesModel {
         }
         break;
       default:
+        {
+          scientificName = "N/A";
+          images = ["nia.jpg", "nia2.jpg", "nia.jpg"];
+          symptoms = 'N/A';
+          favourableConditions = 'N/A';
+          // lifeCycleImage = "N/A";
+          remedies = 'N/A';
+          control = ' N/A';
+        }
+        break;
     }
   }
 }
