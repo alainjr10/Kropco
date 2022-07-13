@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kropco/models/disease_model.dart';
 import 'package:kropco/utils/constants.dart';
 import 'package:kropco/views/disease_analysis_screen.dart';
+import 'package:kropco/views/no_recognitions.dart';
 import 'package:kropco/views/suggestions_screen.dart';
 import 'package:kropco/widgets/custom_appBar.dart';
 import 'package:kropco/widgets/diagnostics_screen_btns.dart';
@@ -241,7 +242,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
               ),
             );
             // resultPage(context, labelForHighest);
-          } else {
+          } else if (confidence.abs() > 0.50) {
             debugPrint("Confidence is too low, we don't know this disease");
             Navigator.pushNamed(
               context,
@@ -252,6 +253,8 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
               ),
             );
             // showCustomDialogWithImage(context, labelForHighest);
+          } else {
+            Navigator.pushNamed(context, NoRecognitions.noRecognitionsScreenId);
           }
         } else {
           debugPrint("No recognitions found");

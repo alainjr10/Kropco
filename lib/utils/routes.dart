@@ -4,6 +4,7 @@ import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/forum_screen.dart';
 import 'package:kropco/views/home_screen.dart';
 import 'package:kropco/views/homepage.dart';
+import 'package:kropco/views/no_recognitions.dart';
 import 'package:kropco/views/notifications_screen.dart';
 import 'package:kropco/views/recently_viewed_screen.dart';
 import 'package:kropco/views/settings_screen.dart';
@@ -23,4 +24,5 @@ var customRoutes = <String, WidgetBuilder>{
   RecentlyViewed.recentlyViewedScreenId: (context) => const RecentlyViewed(),
   NotificationsScreen.notificationsScreenId: (context) =>
       const NotificationsScreen(),
+  NoRecognitions.noRecognitionsScreenId: (context) => const NoRecognitions(),
 };
