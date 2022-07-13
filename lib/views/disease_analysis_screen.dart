@@ -1,12 +1,16 @@
 import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:kropco/models/diseases_model.dart';
+import 'package:kropco/utils/constants.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class DiseaseAnalysisScreen extends StatefulWidget {
   static const diseaseAnalysisScreenId = "/disease_analysis_screen";
-  const DiseaseAnalysisScreen({Key? key, required this.diseaseName})
+  const DiseaseAnalysisScreen(
+      {Key? key, required this.diseaseName, this.recognitions})
       : super(key: key);
   final String diseaseName;
+  final List<dynamic>? recognitions;
 
   @override
   State<DiseaseAnalysisScreen> createState() => _DiseaseAnalysisScreenState();
@@ -14,10 +18,25 @@ class DiseaseAnalysisScreen extends StatefulWidget {
 
 class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
   DiseasesModel dModel = DiseasesModel();
+  List<dynamic>? altRecognitions;
+  double? labelForHighest;
+  Color? progressColor;
   @override
   void initState() {
     super.initState();
+    labelForHighest =
+        widget.recognitions != null ? widget.recognitions![0]['confidence'] : 0;
+    progressColor = labelForHighest! < 0.50
+        ? Colors.red
+        : labelForHighest! < 0.75
+            ? Colors.orange
+            : Colors.green;
     dModel.setVariables(widget.diseaseName);
+    altRecognitions = widget.recognitions != null
+        ? List.from(widget.recognitions!.toList())
+        : [];
+    altRecognitions!.length > 0 ? altRecognitions!.removeAt(0) : [];
+    // altRecognitions!.removeAt(0);
     debugPrint(
         "disease name ${widget.diseaseName}, scientific name ${dModel.scientificName}");
   }
@@ -60,7 +79,7 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 270, left: 20, right: 20),
               child: Container(
-                  height: 100.0,
+                  height: 140.0,
                   width: MediaQuery.of(context).size.width - 24.0,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -73,27 +92,62 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
                       ]),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          // 'Apple Cedar Rust',
-                          widget.diseaseName,
-                          style: const TextStyle(
-                            fontFamily: "VT323",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22.0,
-                            color: Colors.black,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                // 'Apple Cedar Rust',
+                                widget.diseaseName,
+                                style: const TextStyle(
+                                  fontFamily: "VT323",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '${dModel.scientificName}',
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                  color: Color.fromARGB(255, 207, 171, 171),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          '${dModel.scientificName}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.black,
-                          ),
-                        ),
+                        labelForHighest != 0
+                            ? SizedBox(
+                                width: 75.0,
+                                child: CircularPercentIndicator(
+                                  radius: 35.0,
+                                  lineWidth: 11.0,
+                                  animation: true,
+                                  percent: 0.7,
+                                  center: Text(
+                                    "${(labelForHighest! * 100).round()}%",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  footer: const Text(
+                                    "Match",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17.0,
+                                        color: kPrimaryColor),
+                                  ),
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  progressColor: progressColor,
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   )),
@@ -104,6 +158,109 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
             ),
           ],
         ),
+        const SizedBox(height: 20.0),
+        // widget.recognitions!.length > 1
+        altRecognitions!.isNotEmpty
+            ? Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 1.0, horizontal: 15.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Alternative Results",
+                      style: kH3TextSyle,
+                    ),
+                    const SizedBox(height: 8.0),
+                    const Text(
+                      "These are other results we were able to detect. In case you were not satisfied with the above result, you should check out these alternatives",
+                      style: kSubTextTextStyle,
+                      textAlign: TextAlign.justify,
+                    ),
+                    const Divider(thickness: 2.0),
+                    ListView.separated(
+                      itemCount: altRecognitions!.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) {
+                        return const Divider(thickness: 2.0);
+                      },
+                      itemBuilder: (context, index) {
+                        debugPrint(
+                            "recognition ${altRecognitions![index]['confidence']}");
+                        double confidenceMatch =
+                            (altRecognitions![index]['confidence'] * 100);
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+                              arguments: DiseaseAnalysisScreenArguments(
+                                  diseaseName: DiseaseMap()
+                                      .diseasesMap[altRecognitions![index]
+                                          ['label']]!
+                                      .diseaseName),
+                            );
+                          },
+                          child: SizedBox(
+                              height: 75.0,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 75.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(12.0),
+                                      ),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          "assets/alt/${DiseaseMap().diseasesMap[altRecognitions![index]['label']]!.coverImgUrl}",
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12.0),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      // mainAxisAlignment:
+                                      //     MainAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                          altRecognitions![index]['label'],
+                                          style: kH4TextSyle,
+                                        ),
+                                        Text(
+                                          DiseaseMap()
+                                              .diseasesMap[
+                                                  altRecognitions![index]
+                                                      ['label']]!
+                                              .scientificName
+                                              .toString(),
+                                          style: kSubTextTextStyle.copyWith(
+                                              fontSize: 14.0),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                          "Match ${confidenceMatch.round()}%",
+                                          style: kH3TextSyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        );
+                      },
+                    ),
+                    const Divider(thickness: 2.0, height: 0),
+                  ],
+                ),
+              )
+            : const SizedBox(),
         const Padding(
           padding: EdgeInsets.only(top: 60, bottom: 20, left: 14),
           child: Text(
@@ -287,4 +444,11 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
           ],
         ));
   }
+}
+
+class DiseaseAnalysisScreenArguments {
+  final String diseaseName;
+  final List<dynamic>? recognitions;
+  DiseaseAnalysisScreenArguments(
+      {required this.diseaseName, this.recognitions});
 }

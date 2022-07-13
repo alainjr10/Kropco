@@ -317,7 +317,10 @@ class HomeScreen extends StatelessWidget {
                             Navigator.pushNamed(
                               context,
                               DiseaseAnalysisScreen.diseaseAnalysisScreenId,
-                              arguments: trendingDiseases[index].diseaseName,
+                              // arguments: trendingDiseases[index].diseaseName,
+                              arguments: DiseaseAnalysisScreenArguments(
+                                  diseaseName:
+                                      trendingDiseases[index].diseaseName),
                             );
                           },
                           child: Column(

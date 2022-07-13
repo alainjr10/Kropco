@@ -50,9 +50,13 @@ class MyApp extends StatelessWidget {
         ),
         onGenerateRoute: (settings) {
           if (settings.name == DiseaseAnalysisScreen.diseaseAnalysisScreenId) {
-            final String diseaseName = settings.arguments as String;
+            final DiseaseAnalysisScreenArguments args =
+                settings.arguments as DiseaseAnalysisScreenArguments;
             return MaterialPageRoute(builder: (context) {
-              return DiseaseAnalysisScreen(diseaseName: diseaseName);
+              return DiseaseAnalysisScreen(
+                diseaseName: args.diseaseName,
+                recognitions: args.recognitions,
+              );
             });
           }
           assert(false, 'Implementation ${settings.name}');

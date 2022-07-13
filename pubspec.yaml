@@ -45,6 +45,7 @@ dependencies:
   image: ^3.1.1
   progress_dialog_null_safe: ^1.0.7
   carousel_pro_nullsafety: ^1.0.2
+  percent_indicator: ^4.0.0
 
 dev_dependencies:
   flutter_test:

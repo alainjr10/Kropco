@@ -53,7 +53,7 @@ class DiseasesModel {
               "strain of bacteria that is effective at treating cedar apple rust on apple trees. It is a special strain of Bacillus subtilis ";
         }
         break;
-      case "corn maize common rust":
+      case "corn maize common rust ":
         {
           scientificName = "Puccinia sorghi Schwein";
           images = ["10.jpg", "11.jpg", "12.jpg"];
@@ -190,4 +190,58 @@ class DiseasesModel {
         break;
     }
   }
+}
+
+class DiseaseMap {
+  final Map<String, DiseaseSubDetails> diseasesMap = {
+    "corn maize common rust ": DiseaseSubDetails(
+      diseaseName: "corn maize common rust ",
+      scientificName: "Puccinia sorghi Schwein",
+      coverImgUrl: "10.jpg",
+    ),
+    "corn maize northern leaf blight": DiseaseSubDetails(
+      diseaseName: "corn maize northern leaf blight",
+      scientificName: "Exserohilumturcicun",
+      coverImgUrl: "13.jpg",
+    ),
+    "corn maize cercospora leaf spot gray leaf spot": DiseaseSubDetails(
+      diseaseName: "corn maize cercospora leaf spot gray leaf spot",
+      scientificName: "Cercospora zea-maydis",
+      coverImgUrl: "7.jpg",
+    ),
+    "tomato early blight": DiseaseSubDetails(
+      diseaseName: "tomato early blight",
+      scientificName: "Alternaria Solani",
+      coverImgUrl: "30.jpg",
+    ),
+    "tomato late blight": DiseaseSubDetails(
+      diseaseName: "tomato late blight",
+      scientificName: "Phytophthora infestans",
+      coverImgUrl: "33.jpg",
+    ),
+    "potato early blight": DiseaseSubDetails(
+      diseaseName: "potato early blight",
+      scientificName: "Alternaria solani",
+      coverImgUrl: "16.jpg",
+    ),
+    "potato late blight": DiseaseSubDetails(
+      diseaseName: "potato late blight",
+      scientificName: "Alternaria solani",
+      coverImgUrl: "19.jpg",
+    ),
+    "peach bacterial spot": DiseaseSubDetails(
+      diseaseName: "peach bacterial spot",
+      scientificName: "N/A",
+      coverImgUrl: "nia.jpg",
+    ),
+  };
+}
+
+class DiseaseSubDetails {
+  final String diseaseName;
+  final String? scientificName;
+  final String? coverImgUrl;
+
+  DiseaseSubDetails(
+      {required this.diseaseName, this.scientificName, this.coverImgUrl});
 }

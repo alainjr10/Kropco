@@ -233,14 +233,24 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
             debugPrint(
                 "Confidence is high enough: ${confidence.abs()} now navigate to the results screen");
             Navigator.pushNamed(
-                context, DiseaseAnalysisScreen.diseaseAnalysisScreenId,
-                arguments: labelForHighest);
+              context,
+              DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+              arguments: DiseaseAnalysisScreenArguments(
+                diseaseName: labelForHighest,
+                recognitions: _recognitions,
+              ),
+            );
             // resultPage(context, labelForHighest);
           } else {
             debugPrint("Confidence is too low, we don't know this disease");
             Navigator.pushNamed(
-                context, DiseaseAnalysisScreen.diseaseAnalysisScreenId,
-                arguments: labelForHighest);
+              context,
+              DiseaseAnalysisScreen.diseaseAnalysisScreenId,
+              arguments: DiseaseAnalysisScreenArguments(
+                diseaseName: labelForHighest,
+                recognitions: _recognitions,
+              ),
+            );
             // showCustomDialogWithImage(context, labelForHighest);
           }
         } else {
