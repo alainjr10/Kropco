@@ -1,4 +1,6 @@
 import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kropco/models/diseases_model.dart';
 import 'package:kropco/utils/constants.dart';
@@ -21,6 +23,22 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
   List<dynamic>? altRecognitions;
   double? labelForHighest;
   Color? progressColor;
+  FirebaseAuth user = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<void> addDiseaseToFirebase(String diseaseName, coverPhoto) async {
+    firestore
+        .collection('users')
+        .doc(user.currentUser!.uid)
+        .collection('diseases')
+        .add({
+      "diseaseName": diseaseName,
+      "coverPhoto": coverPhoto,
+      "dateTime": DateTime.now(),
+    }).then((value) {
+      debugPrint("Added diseases");
+    }).catchError((onError) => debugPrint("Failed to add disease: $onError "));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +57,8 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
     // altRecognitions!.removeAt(0);
     debugPrint(
         "disease name ${widget.diseaseName}, scientific name ${dModel.scientificName}");
+    debugPrint("The image url is: " + dModel.images[0]);
+    addDiseaseToFirebase(widget.diseaseName, dModel.images[0]);
   }
 
   @override
@@ -202,57 +222,56 @@ class _DiseaseAnalysisScreenState extends State<DiseaseAnalysisScreen> {
                             );
                           },
                           child: SizedBox(
-                              height: 75.0,
+                              // height: 75.0,
                               child: Row(
-                                children: [
-                                  Container(
-                                    width: 75.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(12.0),
-                                      ),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          "assets/alt/${DiseaseMap().diseasesMap[altRecognitions![index]['label']]!.coverImgUrl}",
-                                        ),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
+                            children: [
+                              Container(
+                                width: 75.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.0),
                                   ),
-                                  const SizedBox(width: 12.0),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      // mainAxisAlignment:
-                                      //     MainAxisAlignment.center,
-                                      children: [
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          altRecognitions![index]['label'],
-                                          style: kH4TextSyle,
-                                        ),
-                                        Text(
-                                          DiseaseMap()
-                                              .diseasesMap[
-                                                  altRecognitions![index]
-                                                      ['label']]!
-                                              .scientificName
-                                              .toString(),
-                                          style: kSubTextTextStyle.copyWith(
-                                              fontSize: 14.0),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          "Match ${confidenceMatch.round()}%",
-                                          style: kH3TextSyle,
-                                        ),
-                                      ],
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      "assets/alt/${DiseaseMap().diseasesMap[altRecognitions![index]['label']]!.coverImgUrl}",
                                     ),
+                                    fit: BoxFit.fill,
                                   ),
-                                ],
-                              )),
+                                ),
+                              ),
+                              const SizedBox(width: 12.0),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(height: 8.0),
+                                    Text(
+                                      altRecognitions![index]['label'],
+                                      style: kH4TextSyle,
+                                    ),
+                                    Text(
+                                      DiseaseMap()
+                                          .diseasesMap[altRecognitions![index]
+                                              ['label']]!
+                                          .scientificName,
+                                      // .toString(),
+                                      style: kSubTextTextStyle.copyWith(
+                                          fontSize: 14.0),
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    Text(
+                                      "Match ${confidenceMatch.round()}%",
+                                      style: kH3TextSyle,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
                         );
                       },
                     ),

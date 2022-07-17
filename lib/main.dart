@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kropco/services/disease_provider.dart';
 import 'package:kropco/utils/routes.dart';
+import 'package:kropco/views/auth/signup.dart';
 import 'package:kropco/views/disease_analysis_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         },
         debugShowCheckedModeBanner: false,
         routes: customRoutes,
+        //initialRoute: SignUp.signUpScreenId,
         //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );

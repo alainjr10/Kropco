@@ -1,12 +1,12 @@
 class DiseasesModel {
   List<String> images = [];
-  String? diseaseName;
-  String? scientificName,
-      symptoms,
-      favourableConditions,
-      remedies,
-      control,
-      lifeCycleImage;
+  String diseaseName = "N/A";
+  String scientificName = "N/A",
+      symptoms = "N/A",
+      favourableConditions = "N/A",
+      remedies = "N/A",
+      control = "N/A",
+      lifeCycleImage = "N/A";
 
   // DiseasesModel({
   //   // required this.images,
@@ -209,6 +209,11 @@ class DiseaseMap {
       scientificName: "Cercospora zea-maydis",
       coverImgUrl: "7.jpg",
     ),
+    "corn maize healthy": DiseaseSubDetails(
+      diseaseName: "corn maize cercospora leaf spot gray leaf spot",
+      scientificName: "Cercospora zea-maydis",
+      coverImgUrl: "7.jpg",
+    ),
     "tomato early blight": DiseaseSubDetails(
       diseaseName: "tomato early blight",
       scientificName: "Alternaria Solani",
@@ -239,9 +244,11 @@ class DiseaseMap {
 
 class DiseaseSubDetails {
   final String diseaseName;
-  final String? scientificName;
-  final String? coverImgUrl;
+  final String scientificName;
+  final String coverImgUrl;
 
   DiseaseSubDetails(
-      {required this.diseaseName, this.scientificName, this.coverImgUrl});
+      {required this.diseaseName,
+      required this.scientificName,
+      required this.coverImgUrl});
 }

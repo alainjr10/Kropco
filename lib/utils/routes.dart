@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:kropco/views/auth/login.dart';
+import 'package:kropco/views/auth/signup.dart';
 import 'package:kropco/views/dashboard_screen.dart';
 import 'package:kropco/views/disease_detection_screen.dart';
 import 'package:kropco/views/forum_screen.dart';
@@ -25,4 +27,6 @@ var customRoutes = <String, WidgetBuilder>{
   NotificationsScreen.notificationsScreenId: (context) =>
       const NotificationsScreen(),
   NoRecognitions.noRecognitionsScreenId: (context) => const NoRecognitions(),
+  SignInWithEmail.signInWithEmailScreenID: (context) => const SignInWithEmail(),
+  SignUp.signUpScreenId: (context) => const SignUp(),
 };

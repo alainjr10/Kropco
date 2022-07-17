@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kropco/views/auth/signup.dart';
 
 import '../utils/constants.dart';
 
@@ -8,6 +10,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth _auth = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -116,7 +119,12 @@ class Settings extends StatelessWidget {
             ),
             AccountItemsCard(
               cardTitle: "Logout",
-              cardTapped: () {},
+              cardTapped: () {
+                _auth.signOut().then((value) {
+                  Navigator.pushReplacementNamed(
+                      context, SignUp.signUpScreenId);
+                });
+              },
             ),
             const SizedBox(height: 40.0),
             // row which contains social media icons like facebook, whatsapp, twitter, youtube, etc

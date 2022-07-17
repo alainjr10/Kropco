@@ -20,4 +20,15 @@ const kSubTextTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
+final ButtonStyle kPrimaryBtnStyle = ElevatedButton.styleFrom(
+  onSurface: Colors.white,
+  primary: kPrimaryColor,
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(15.0),
+    ),
+  ),
+  minimumSize: const Size(double.infinity, 50.0),
+);
+
 //const kte
