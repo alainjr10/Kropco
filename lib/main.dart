@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         },
         debugShowCheckedModeBanner: false,
         routes: customRoutes,
-        //initialRoute: SignUp.signUpScreenId,
+        initialRoute: SignUp.signUpScreenId,
         //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
